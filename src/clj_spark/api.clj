@@ -13,9 +13,14 @@
 ; Helpers
 
 (defn spark-context
-  [& {:keys [master job-name spark-home jars environment]}]
-  (log/warn "JavaSparkContext" master job-name spark-home jars environment)
-  (JavaSparkContext. master job-name spark-home (into-array String (s/split jars #",")) environment))
+  [& {:keys [master app-name spark-home jars environment]}]
+  (log/warn "JavaSparkContext" master app-name spark-home jars environment)
+  (JavaSparkContext. master app-name
+                     (or spark-home "")
+                     (into-array String
+                                 (if jars (s/split jars #",")
+                                 []))
+                     (or environment {})))
 
 (defn- untuple
   [t]
