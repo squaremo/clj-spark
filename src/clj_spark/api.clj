@@ -96,7 +96,7 @@
 
 (defn flat-map
   [rdd f]
-  (.map rdd (flat-map-function f)))
+  (.flatMap rdd (flat-map-function f)))
 
 (defn filter
   [rdd f]
